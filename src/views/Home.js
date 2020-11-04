@@ -1,7 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
+
+import { useSelector, useDispatch } from 'react-redux'
+
 import BG from "../assets/img/head 2.png"
 
+import { GET_ALL_COUNTRIES } from '../redux/actions/country'
+
 export default function Home() {
+  const dispatch = useDispatch()
+  const country = useSelector((state) => state.country)
+  
+  useEffect(() => {
+    dispatch(GET_ALL_COUNTRIES())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div className="cont text-center">
         <div className="logo">
@@ -13,10 +25,11 @@ export default function Home() {
         <div className="form-group select-custom">
             <select className="form-control">
                 <option defaultValue>Negara</option>
-                <option>Indonesia</option>
-                <option>Malaysia</option>
-                <option>Arab</option>
-                <option>Jepang</option>
+                {
+                  country.list.map((item, index) => (
+                    <option key={index} value={item.Slug} >{item.Country}</option>
+                  ))
+                }
             </select>
         </div>
         <div className="row">
@@ -36,7 +49,7 @@ export default function Home() {
                     <p className="card-title" >Sembuh</p>
                     <p className="card-number">10,000,000</p>
                     <p className="card-title">Orang</p>
-                    <p className="card-text">Jumlah angka kasus COVID - 19</p>
+                    <p className="card-text">Jumlah angka sembuh COVID - 19</p>
                 </div>
               </div>
             </div>
@@ -46,7 +59,7 @@ export default function Home() {
                     <p className="card-title" >Meninggal</p>
                     <p className="card-number">10,000,000</p>
                     <p className="card-title">Orang</p>
-                    <p className="card-text">Jumlah angka kasus COVID - 19</p>
+                    <p className="card-text">Jumlah angka meninggal COVID - 19</p>
                   </div>
                 </div>
               </div>
